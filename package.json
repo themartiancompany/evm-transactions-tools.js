@@ -10,16 +10,15 @@
       "https://patreon.com/tallero"
   },
   "man": [
-    "./man/evm-contract-call-dynamic.1"
+    "./man/evm-transaction-get.1"
   ],
   "files": [
     "AUTHORS.rst",
     "COPYING",
     "README.md",
     "lib",
-    "libevm-wallet",
-    "evm-wallet",
-    "evm-wallet.js",
+    "libevm-transactions-tools",
+    "libevm-transactions-tools.webpack.config.js",
     "fs-worker.js",
     "fs-worker.webpack.config.js",
     "index.html",
@@ -34,16 +33,16 @@
     "ethereum"
   ],
   "homepage":
-    "https://github.com/themartiancompany/evm-contracts-tools",
+    "https://github.com/themartiancompany/evm-transactions-tools",
   "bugs": {
     "url":
-      "https://github.com/themartiancompany/evm-contracts-tools/issues"
+      "https://github.com/themartiancompany/evm-transactions-tools/issues"
   },
   "repository": {
     "type":
       "git",
     "url":
-      "git+https://github.com/themartiancompany/evm-contracts-tools.git"
+      "git+https://github.com/themartiancompany/evm-transactions-tools.git"
   },
   "license":
     "AGPL-3.0-or-later",
@@ -90,12 +89,7 @@
   "type":
     "commonjs",
   "main":
-    "libevm-contracts-tools",
-  "bin":
-    { "evm-contract-call-dynamic.js":
-        "lib/evm-contract-call-dynamic",
-      "evm-contract-call-static.js":
-        "lib/evm-contract-call-static" },
+    "libevm-transactions-tools",
   "scripts": {
     "build-fs-worker":
       "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details",

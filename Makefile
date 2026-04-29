@@ -26,7 +26,7 @@
 
 SHELL=bash
 PREFIX ?= /usr/local
-_PROJECT_NPM=evm-contracts-tools
+_PROJECT_NPM=evm-transactions-tools
 _PROJECT=$(_PROJECT_NPM).js
 _NAMESPACE=themartiancompany
 DOC_DIR=$(DESTDIR)$(PREFIX)/share/doc/$(_PROJECT_NPM)
@@ -65,9 +65,7 @@ NPM_FILES=\
   "webpack.config.cjs"
 
 MAN_FILES=\
-  evm-contract-bytecode-get \
-  evm-contract-call \
-  evm-contract-deployer-get
+  evm-transaction-get
 
 all: build-man build-npm build-scripts
 

@@ -1,0 +1,450 @@
+#!/usr/bin/env node
+
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+//    ----------------------------------------------------------------------
+//    Copyright © 2024, 2025  Pellegrino Prevete
+//
+//    All rights reserved
+//    ----------------------------------------------------------------------
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Affero General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Affero General Public License for more details.
+//
+//    You should have received a copy of the GNU Affero General Public License
+//    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+// const
+//   { ethers } =
+//     require(
+//       "ethers");
+// _ethers =
+//   ethers;
+const
+  _libcrash =
+    require(
+      '../libcrash-js/crash-js');
+_cmdline_check =
+  _libcrash._cmdline_check;
+_dirname =
+  _libcrash._dirname;
+_file_read =
+  _libcrash._file_read;
+_file_write =
+  _libcrash._file_write;
+_json_display =
+  _libcrash._json_display;
+_path_join =
+  _libcrash._path_join;
+_msg_info =
+  _libcrash._msg_info;
+_msg_error =
+  _libcrash._msg_error;
+_printf =
+  _libcrash._printf;
+const
+  _evm_wallet_get =
+    require(
+      '../evm-wallet/wallet-get');
+_wallet_get =
+  _evm_wallet_get._wallet_get;
+const
+  _network_provider_module =
+    require(
+      '../evm-wallet/network-provider');
+_provider_get =
+  _network_provider_module._provider_get;
+
+function
+  _global_variables() {
+  app_name =
+    "transaction-receipt-get"
+  retries_max =
+    "";
+  wallet_seed =
+    "";
+  wallet_password_path =
+    "";
+  transaction_address =
+    "";
+  chain_id =
+    "";
+  chain_name =
+    "";
+  target_network =
+    "";
+  api_key_path =
+    "";
+  output_path =
+    "";
+  quiet =
+    "";
+}
+
+function
+  _msg_error_no_input_data() {
+  let
+    _msg,
+    _text;
+  _text = [
+    "You need to provide either",
+    "the bytecode or the data"
+  ];
+  _msg =
+    _text.join(
+      " ");
+  _msg_error(
+    _msg,
+    1);
+}
+
+function
+  _msg_info_wallet_selected(
+    _wallet) {
+  let
+    _msg,
+    _template;
+  _template =
+    "Wallet is '{_wallet}'.";
+  _msg =
+    _template.replaceAll(
+      "{_wallet}",
+      _wallet);
+  _msg_info(
+    _msg);
+}
+
+async function
+  _transaction_receipt_get(
+    _retries_max,
+    _wallet_seed,
+    _wallet_password_path,
+    _chain_id,
+    _chain_name,
+    _target_network,
+    _api_key_path,
+    _output_path,
+    _transaction_address) {
+  let
+    _api_key,
+    _get_transaction_opts,
+    _json,
+    _network,
+    _network_provider,
+    _provider_get_opts,
+    _receipt,
+    _wallet,
+    _wallet_get_opts,
+    _wallet_path_list,
+    _wallet_path;
+  _provider_get_opts = [
+    _target_network
+  ];
+  if ( _output_path == undefined ) {
+    _output_path =
+      "";
+  }
+  if ( _api_key_path != "" ) {
+    _api_key =
+      _file_read(
+        _api_key_path);
+  }
+  else if ( _api_key_path == undefined ) {
+    _api_key =
+      "";
+  }
+  _provider_get_opts.push(
+    _api_key);
+  if (_chain_id == undefined ) {
+    _chain_id =
+      "";
+  }
+  _provider_get_opts.push(
+    _chain_id);
+  if ( _chain_name == undefined ) {
+    _chain_name =
+      "";
+  }
+  _provider_get_opts.push(
+    _chain_name);
+  _network_provider =
+    await _provider_get.apply(
+      null,
+      _provider_get_opts);
+  if ( _wallet_seed != "" &&
+       _wallet_seed != undefined ) {
+    _wallet_path_list = [
+      _dirname(
+        _wallet_seed),
+      "wallet.dat"
+    ];
+    _wallet_path =
+      _path_join(
+        _wallet_path_list);
+    _wallet_get_opts = [
+      _wallet_path,
+      _wallet_password_path,
+      _wallet_seed,
+      _network_provider
+    ];
+    _wallet =
+      _wallet_get.apply(
+        null,
+        _wallet_get_opts);
+    _msg_info_wallet_selected(
+      _wallet);
+    _network_provider =
+      _wallet;
+  }
+  try {
+    _receipt =
+      await _network_provider.getTransactionReceipt(
+        _transaction_address);
+    if ( _output_path != "" ) {
+      _json =
+        _json_display(
+          _receipt);
+      _file_write(
+        _output_path,
+        _json);
+    }
+  } catch (e) {
+    console.error(
+      e);
+  }
+  return _receipt;
+}
+
+function
+  _config_show() {
+  let
+    _line,
+    _text;
+  _text = [];
+  _text.push(
+    "         Maximum retries: {retries_max}".replace(
+      "{retries_max}",
+      retries_max));
+  _text.push(
+    "             Wallet seed: {wallet_seed}".replace(
+      "{wallet_seed}",
+      wallet_seed));
+  _text.push(
+    "                Chain ID: {chain_id}".replace(
+      "{chain_id}",
+      chain_id));
+  _text.push(
+    "              Chain Name: {chain_name}".replace(
+      "{chain_name}",
+      chain_name));
+  _text.push(
+    "          Target network: {target_network}".replace(
+      "{target_network}",
+      target_network));
+  _text.push(
+    "                 API Key: {api_key_path}".replace(
+      "{api_key_path}",
+      api_key_path));
+  _text.push(
+    "             Output path: {output_path}".replace(
+      "{output_path}",
+      output_path));
+  _text.push(
+    "     Transaction address: {transaction_address}".replace(
+      "{transaction_address}",
+      transaction_address));
+  for ( _line of _text ) {
+    _msg_info(
+      _line);
+  }
+}
+
+function
+  _usage(
+    _exit_code) {
+  let
+    _line,
+    _text;
+  _text = [
+    "Usage:",
+    "  contract-get",
+    "    <quiet>",
+    "    <retries_max>",
+    "    <wallet_seed>",
+    "    <wallet_password_path>",
+    "    <chain_id>",
+    "    <chain_name>",
+    "    <target_network>",
+    "    <api_key_path>",
+    "    <output_path>",
+    "    <transaction_address>",
+    "",
+    "Args:",
+    "  <quiet>                          Can be 'y' or 'n'",
+    "                                   Default: y",
+    "  <retries_max>                    Maximum number of retries before",
+    "                                   failing.",
+    "  <wallet_seed>                    Path of the seed phrase.",
+    "  <wallet_password_path>           Wallet password path.",
+    "  <chain_id>                       Chain ID for the network.",
+    "  <chain_name>                     Name for the network.",
+    "  <target_network>                 Network on which the transaction",
+    "                                   resides.",
+    "  <api_key_path>                   Path of the API key for the",
+    "                                   contract ABI provider service.",
+    "  <output_path>                    File on which to optionally save",
+    "                                   the output.",
+    "  <transaction_address>            Transaction one wants to retrieve.",
+    "",
+    "  Options:",
+    "    -h                             This help."
+  ];
+  for ( _line of _text ) {
+    _msg_info(
+      _line);
+  }
+  process.exit(
+    _exit_code);
+}
+
+function _cmdline_parse() {
+  quiet =
+    "y";
+  process.argv.forEach(
+    function (
+      _value,
+      _index,
+      _array) {
+      if ( _index == 2 ) {
+        quiet =
+          _value;
+      }
+      if ( _index == 3 ) {
+        retries_max =
+          _value;
+      }
+      if ( _index == 4 ) {
+        wallet_seed =
+          _value;
+      }
+      if ( _index == 5 ) {
+        wallet_password_path =
+          _value;
+      }
+      if ( _index == 6 ) {
+        chain_id =
+          _value;
+      }
+      if ( _index == 7 ) {
+        chain_name =
+          _value;
+      }
+      if ( _index == 8 ) {
+        target_network =
+          _value;
+      }
+      if ( _index == 9 ) {
+        api_key_path =
+          _value;
+      }
+      if ( _index == 10 ) {
+        output_path =
+          _value;
+      }
+      if ( _index == 11 ) {
+        transaction_address =
+          _value;
+      }
+      if ( _value == "-h" ||
+           _value == "--help" ) {
+        quiet =
+          "n";
+        _usage(
+	  0);
+      }
+    }
+  );
+  if ( transaction_address == "" ) {
+    quiet =
+      "n";
+    _usage(
+      1);
+  }
+}
+
+function
+  _overrides_set() {
+  if ( retries_max == "" ) {
+    retries_max =
+      100;
+  }
+  if ( chain_id == "" ) {
+    _msg_info(
+      "TODO: use evm_chains_info_module");
+  }
+  if ( chain_name == "" ) {
+    _msg_info(
+      "TODO: use evm_chains_info_module");
+  }
+}
+
+async function
+  _transaction_receipt_get_cmdline(
+    _app_opts) {
+  let
+    _json,
+    _receipt;
+  try {
+    _receipt = 
+      await _transaction_receipt_get.apply(
+        null,
+        _app_opts);
+    if ( _receipt != undefined ) {
+      _json =
+        _json_display(
+          _receipt);
+      _printf(
+        _json);
+    }
+    else {
+      throw "'Transaction Receipt Get' returned undefined value."
+    }
+  } catch (error) {
+    _msg_error(
+      error,
+      1);
+  }
+}
+
+if ( _cmdline_check(
+       "transaction-receipt-get") ) {
+  _global_variables();
+  _cmdline_parse();
+  _overrides_set();
+  _config_show();
+  app_opts = [
+    retries_max,
+    wallet_seed,
+    wallet_password_path,
+    chain_id,
+    chain_name,
+    target_network,
+    api_key_path,
+    output_path,
+    transaction_address
+  ];
+  _transaction_receipt_get_cmdline(
+    app_opts);
+}
+
+module.exports = {
+  _transaction_receipt_get:
+    _transaction_receipt_get
+};
