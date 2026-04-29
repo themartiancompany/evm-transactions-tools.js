@@ -1,3 +1,0 @@
-[submodule "man"]
-	path = man
-	url = https://github.com/themartiancompany/evm-contracts-tools-man
