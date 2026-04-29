@@ -58,7 +58,6 @@ NPM_FILES=\
   "AUTHORS.rst" \
   "lib" \
   "lib$(_PROJECT_NPM)" \
-  "lib$(_PROJECT_NPM).webpack.config.cjs" \
   "eslint.config.mjs" \
   "fs-worker.webpack.config.cjs" \
   "package.json" \
