@@ -74,7 +74,7 @@
   "dependencies": {
     "crash-js":
       "^0.1.88",
-    "evm-wallet":
+    "evm-wallet.js":
       "^0.0.5",
     "libevm":
       "^0.0.1",
