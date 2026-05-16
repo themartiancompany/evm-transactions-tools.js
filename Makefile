@@ -114,7 +114,20 @@ build-man:
 	  "build/man"
 	cp \
 	  "man/variables.rst" \
-	  "build/man"
+	  "build/man"; \
+	_tag="$$( \
+	  git \
+	    tag | \
+	    sort \
+	      -V | \
+              head \
+	        -n \
+	          1)"; \
+	cat \
+	  "man/$(_PROJECT).1.rst" | \
+	  sed \
+	    "s/$(_PROJECT_NPM)/$(_PROJECT)/g" > \
+	    "build/man/$(_PROJECT).1.rst"; \
 	for _file in $(MAN_FILES); do \
 	  cp \
 	    "man/$${_file}.1.rst" \
