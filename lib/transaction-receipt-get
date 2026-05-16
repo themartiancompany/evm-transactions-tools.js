@@ -57,7 +57,7 @@ _printf =
 const
   _evm_wallet_module =
     require(
-      "evm-wallet");
+      "evm-wallet.js");
 _wallet_get =
   _evm_wallet_module._wallet_get;
 _provider_get =
