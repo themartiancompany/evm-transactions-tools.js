@@ -59,12 +59,8 @@ const
       "evm-wallet.js");
 _wallet_get =
   _evm_wallet_module._wallet_get;
-const
-  _network_provider_module =
-    require(
-      "evm-wallet");
 _provider_get =
-  _network_provider_module._provider_get;
+  _evm_wallet_module._provider_get;
 
 function
   _global_variables() {
