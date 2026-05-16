@@ -31,17 +31,10 @@
  *     If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-// const
-//   { ethers } =
-//     require(
-//       "ethers");
-// _ethers =
-//   ethers;
 const
   _libcrash =
     require(
-      '../libcrash-js/crash-js');
+      "crash-js");
 _cmdline_check =
   _libcrash._cmdline_check;
 _dirname =
@@ -61,15 +54,15 @@ _msg_error =
 _printf =
   _libcrash._printf;
 const
-  _evm_wallet_get =
+  _evm_wallet_module =
     require(
-      '../evm-wallet/wallet-get');
+      "evm-wallet");
 _wallet_get =
-  _evm_wallet_get._wallet_get;
+  _evm_wallet_module._wallet_get;
 const
   _network_provider_module =
     require(
-      '../evm-wallet/network-provider');
+      "evm-wallet");
 _provider_get =
   _network_provider_module._provider_get;
 
