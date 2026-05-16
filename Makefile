@@ -124,10 +124,10 @@ build-man:
 	        -n \
 	          1)"; \
 	cat \
-	  "man/$(_PROJECT).1.rst" | \
+	  "man/evm-transaction-get.1.rst" | \
 	  sed \
-	    "s/$(_PROJECT_NPM)/$(_PROJECT)/g" > \
-	    "build/man/$(_PROJECT).1.rst"; \
+	    "s/evm-transaction-get/evm-transaction-get.js/g" > \
+	    "build/man/evm-transaction-get.js.1.rst"; \
 	for _file in $(MAN_FILES); do \
 	  cp \
 	    "man/$${_file}.1.rst" \
