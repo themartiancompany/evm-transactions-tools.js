@@ -55,9 +55,9 @@
   },
   "devDependencies": {
     "crash-js-webpack":
-      "^0.0.3",
+      "^0.0.6",
     "flatted":
-      "3.4.1",
+      "^3.2.9",
     "eslint":
       "^10.0.3",
     "globals":
@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "crash-js":
-      "^0.1.88",
+      "^0.1.101",
     "evm-wallet.js":
       "^0.0.5",
     "libevm":
