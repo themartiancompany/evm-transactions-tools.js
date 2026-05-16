@@ -1,6 +1,6 @@
 { "name": "evm-transactions-tools",
   "version":
-    "0.0.2",
+    "0.0.3",
   "description":
     "Programs and libraries to interact with Ethereum Virtual Machine (EVM) networks transactions in native computer applications, in particular those written using the LibEVM library and using the EVM Contracts Tools.",
   "funding": {
