@@ -99,7 +99,7 @@ module.exports = {
       "evm-transactions-tools":
         _path.resolve(
           __dirname,
-          "libevm-transaction-tools"),
+          "libevm-transactions-tools"),
       "fs":
         _path.resolve(
           __dirname,
