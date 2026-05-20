@@ -33,7 +33,7 @@ const
       __dirname);
 const
   _input_file_name =
-    `libevm-transactions-tools`;
+    `evm-transactions-tools`;
 const
   _input_file_path =
     `./${_input_file_name}`;

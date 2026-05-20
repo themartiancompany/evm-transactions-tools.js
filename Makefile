@@ -56,6 +56,7 @@ NPM_FILES=\
   "README.md" \
   "COPYING" \
   "AUTHORS.rst" \
+  "dist" \
   "lib" \
   "lib$(_PROJECT_NPM)" \
   "eslint.config.mjs" \
@@ -145,10 +146,22 @@ build-npm:
 
 	make \
 	  build-man
-	cp \
-	  -r \
-	  $(NPM_FILES) \
-	  "build"; \
+	for _file in $(NPM_FILES); do \
+	  if [[ -d "$${_file}" ]]; then \
+	    mkdir \
+	      -p \
+	      "build/$${_file}"; \
+	    cp \
+	      -r \
+	      "$${_file}"/* \
+	      "build/$${_file}/"; \
+	  elif [[ -e "$${_file}" ]]; then \
+	    cp \
+	      -r \
+	      "$${_file}" \
+	      "build/$${_file}"; \
+	  fi; \
+	done; \
 	cd \
 	  "build"; \
 	_version="$$( \
