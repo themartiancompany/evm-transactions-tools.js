@@ -33,6 +33,7 @@ const
 const
   _ignores = [
     "build/**",
+    "dist/**",
     "eslint.config.js",
     "evm-transactions-tools.js",
     "fs-worker.js",
