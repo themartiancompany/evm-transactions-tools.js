@@ -61,7 +61,7 @@ export default defineConfig([
          {  ...globals.browser,
             ...globals.node } } },
  { 
-   ignores: [
+   ignores:
      _ignores,
    rules:
      { semi:
