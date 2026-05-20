@@ -29,18 +29,20 @@ import { defineConfig } from "eslint/config";
 
 const
   _project =
-    "evm-wallet";
-
+    "evm-transactions-tools";
+const
+  _ignores = [
+    "build/**",
+    "eslint.config.js",
+    "evm-transactions-tools.js",
+    "fs-worker.js",
+    "man/**",
+    "node_modules/**"
+  ];
 export default defineConfig([
  {
-   ignores: [
-     "build/**",
-     "eslint.config.js",
-     "libevm-transactions-tools.js",
-     "fs-worker.js",
-     "man/**",
-     "node_modules/**"
-   ],
+   ignores:
+     _ignores,
    rules:
      { semi:
          "error",
@@ -48,8 +50,7 @@ export default defineConfig([
          "error" },
    files:
      [ "**/*js,mjs,cjs}",
-       `**/${_project}*`,
-       `**/lib${_project}*`
+       `**/${_project}*`
      ],
    plugins:
      { js },
@@ -75,8 +76,7 @@ export default defineConfig([
          "error" },
    files:
      [ "**/*.js",
-       `**/${_project}*`,
-       `**/lib${_project}*`
+       `**/${_project}*`
      ],
    languageOptions:
      { sourceType:
