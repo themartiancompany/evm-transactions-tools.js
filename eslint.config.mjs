@@ -62,13 +62,7 @@ export default defineConfig([
             ...globals.node } } },
  { 
    ignores: [
-     "build/**",
-     "eslint.config.js",
-     "libevm-transactions-tools.js",
-     "fs-worker.js",
-     "man/**",
-     "node_modules/**"
-   ],
+     _ignores,
    rules:
      { semi:
          "error",
