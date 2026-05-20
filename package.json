@@ -16,11 +16,10 @@
     "AUTHORS.rst",
     "COPYING",
     "README.md",
+    "dist",
     "lib",
-    "libevm-transactions-tools",
-    "fs-worker.js",
+    "evm-transactions-tools",
     "fs-worker.webpack.config.js",
-    "index.html",
     "package.json",
     "serve.json",
     "webpack.config.js"
@@ -29,7 +28,8 @@
     "ur",
     "themartiancompany",
     "dogeos",
-    "ethereum"
+    "ethereum",
+    "evm-toolchain"
   ],
   "homepage":
     "https://github.com/themartiancompany/evm-transactions-tools",
@@ -41,7 +41,7 @@
     "type":
       "git",
     "url":
-      "git+https://github.com/themartiancompany/evm-transactions-tools.git"
+      "git+https://github.com/themartiancompany/evm-transactions-tools.js.git"
   },
   "license":
     "AGPL-3.0-or-later",
@@ -82,12 +82,12 @@
   "type":
     "commonjs",
   "main":
-    "libevm-transactions-tools",
+    "evm-transactions-tools",
   "scripts": {
     "build-fs-worker":
-      "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details",
+      "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details && cp 'fs-worker.js' 'dist/evm-transactions-tools'",
     "build-lib":
-      "npx webpack --mode 'production' --config 'webpack.config.cjs' --stats-error-details",
+      "npx webpack --mode 'production' --config 'webpack.config.cjs' --stats-error-details && mv 'evm-transactions-tools.js' 'dist/evm-transactions-tools'",
     "build":
       "npm run lint && npm run build-fs-worker && npm run build-lib",
     "lint":
@@ -95,7 +95,7 @@
     "publish-pnm":
       "npm run build && npm publish --access public",
     "start":
-      "npx safely-serve --help # index.html --port 3000 --https --no-cache",
+      "npx safely-serve 'dist/evm-transaction-tools' --port 3000 --https --no-cache",
     "test":
       "echo \"Error: no test specified\" && exit 1"
   }
