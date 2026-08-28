@@ -36,7 +36,9 @@ const
     "dist/**",
     "eslint.config.js",
     "evm-transactions-tools.js",
+    "**/*.evm-transactions-tools.js",
     "fs-worker.js",
+    "**/*.fs-worker.js",
     "man/**",
     "node_modules/**"
   ];
@@ -52,6 +54,7 @@ export default defineConfig([
    files:
      [ "**/*.{js,mjs,cjs}",
        `**/${_project}*`
+       "lib/*",
      ],
    plugins:
      { js },
@@ -70,8 +73,7 @@ export default defineConfig([
        "prefer-const":
          "error" },
    files:
-     [ "**/*.js",
-       `**/${_project}*`
+     [ "**/*.{cjs,js}",
      ],
    languageOptions:
      { sourceType:
