@@ -34,73 +34,165 @@
 
 const
   _libcrash =
-    require(
-      "crash-js");
-_cmdline_check =
-  _libcrash._cmdline_check;
-_dirname =
-  _libcrash._dirname;
-_file_read =
-  _libcrash._file_read;
-_file_write =
-  _libcrash._file_write;
-_json_display =
-  _libcrash._json_display;
-_path_join =
-  _libcrash._path_join;
-_msg_info =
-  _libcrash._msg_info;
-_msg_error =
-  _libcrash._msg_error;
-_printf =
-  _libcrash._printf;
+    await import(
+      "libcrash-js");
+/* global
+     _argv */
+const
+  _argv =
+    _libcrash._argv;
+/* global
+     _cmdline_check */
+const
+  _cmdline_check =
+    _libcrash._cmdline_check;
+/* global
+     _dirname */
+const
+  _dirname =
+    _libcrash._dirname;
+/* global
+     _echo */
+const
+  _echo =
+    _libcrash._echo;
+/* global
+     _exit */
+const
+  _exit =
+    _libcrash._exit;
+/* global
+     _file_read */
+const
+  _file_read =
+    _libcrash._file_read;
+/* global
+     _file_write */
+const
+  _file_write =
+    _libcrash._file_write;
+/* global
+     _get */
+const
+  _get =
+    _libcrash._get;
+/* global
+     _global_get */
+const
+  _global_get =
+    _libcrash._global_get;
+/* global
+     _json_display */
+const
+  _json_display =
+    _libcrash._json_display;
+/* global
+     _path_join */
+const
+  _path_join =
+    _libcrash._path_join;
+/* global
+     _msg_info */
+const
+  _msg_info =
+    _libcrash._msg_info;
+/* global
+     _msg_error */
+const
+  _msg_error =
+    _libcrash._msg_error;
+/* global
+     _override_set */
+const
+  _override_set =
+    _evm_wallet_module._override_set;
+/* global
+     _printf */
+const
+  _printf =
+    _libcrash._printf;
+/* global
+     _set */
+const
+  _set =
+    _evm_wallet_module._set;
 const
   _evm_wallet_module =
-    require(
-      "evm-wallet.js");
-_wallet_get =
-  _evm_wallet_module._wallet_get;
-_provider_get =
-  _evm_wallet_module._provider_get;
+    await import(
+      "evm-wallet");
+/* global
+     _provider_get */
+const
+  _provider_get =
+    _evm_wallet_module._provider_get;
+/* global
+     _wallet_get */
+const
+  _wallet_get =
+    _evm_wallet_module._wallet_get;
 
 function
   _global_variables() {
-  app_name =
-    "transaction-receipt-get"
-  retries_max =
-    "";
-  wallet_seed =
-    "";
-  wallet_password_path =
-    "";
-  transaction_address =
-    "";
-  chain_id =
-    "";
-  chain_name =
-    "";
-  target_network =
-    "";
-  api_key_path =
-    "";
-  output_path =
-    "";
-  quiet =
+  _set(
+    "app",
+    "name",
+    "transaction-receipt-get");
+  _set(
+    "app",
+    "opts",
+    []);
+  _set(
+    "retries",
+    "max",
+    "");
+  _set(
+    "wallet",
+    "seed",
+    "");
+  _set(
+    "wallet",
+    "password_path",
+    "");
+  _set(
+    "transaction",
+    "address",
+    "");
+  _set(
+    "chain",
+    "id",
+    "");
+  _set(
+    "chain",
+    "name",
+    "");
+  _set(
+    "target",
+    "network",
+    "");
+  _set(
+    "api_key",
+    "path",
+    "");
+  _set(
+    "output",
+    "path",
+    "");
+  _global[
+    "quiet"] =
     "";
 }
 
 function
   _msg_error_no_input_data() {
-  let
-    _msg,
-    _text;
-  _text = [
-    "You need to provide either",
-    "the bytecode or the data"
-  ];
-  _msg =
-    _text.join(
-      " ");
+  const
+    _text = [
+      "You need to provide either",
+      "the bytecode or the data"
+    ];
+  const
+    _msg =
+      _text.join(
+        " ");
   _msg_error(
     _msg,
     1);
@@ -109,15 +201,9 @@ function
 function
   _msg_info_wallet_selected(
     _wallet) {
-  let
-    _msg,
-    _template;
-  _template =
-    "Wallet is '{_wallet}'.";
-  _msg =
-    _template.replaceAll(
-      "{_wallet}",
-      _wallet);
+  const
+    _msg =
+      `Wallet is '${_wallet}'.`;
   _msg_info(
     _msg);
 }
@@ -226,18 +312,18 @@ async function
 function
   _config_show() {
   let
-    _line,
-    _text;
-  _text = [
-    `         Maximum retries: ${retries_max}`,
-    `             Wallet seed: ${wallet_seed}`,
-    `                Chain ID: ${chain_id}`,
-    `              Chain Name: ${chain_name}`,
-    `          Target network: ${target_network}`,
-    `                 API Key: ${api_key_path}`,
-    `             Output path: ${output_path}`,
-    `     Transaction address: ${transaction_address}`,
-  ];
+    _line;
+  const
+    _text = [
+      `         Maximum retries: ${retries_max}`,
+      `             Wallet seed: ${wallet_seed}`,
+      `                Chain ID: ${chain_id}`,
+      `              Chain Name: ${chain_name}`,
+      `          Target network: ${target_network}`,
+      `                 API Key: ${api_key_path}`,
+      `             Output path: ${output_path}`,
+      `     Transaction address: ${transaction_address}`,
+    ];
   for ( _line of _text ) {
     _msg_info(
       _line);
@@ -248,109 +334,153 @@ function
   _usage(
     _exit_code) {
   let
-    _line,
-    _text;
-  _text = [
-    "Usage:",
-    "  transaction-receipt-get",
-    "    <quiet>",
-    "    <retries-max>",
-    "    <wallet-seed>",
-    "    <wallet-password-path>",
-    "    <chain-id>",
-    "    <chain_-ame>",
-    "    <target-network>",
-    "    <api-key-path>",
-    "    <output-path>",
-    "    <transaction-address>",
-    "",
-    "Args:",
-    "  <quiet>                          Can be 'y' or 'n'",
-    "                                   Default: y",
-    "  <retries-max>                    Maximum number of retries before",
-    "                                   failing.",
-    "  <wallet-seed>                    Path of the seed phrase.",
-    "  <wallet-password_path>           Wallet password path.",
-    "  <chain-id>                       Chain ID for the network.",
-    "  <chain-name>                     Name for the network.",
-    "  <target-network>                 Network on which the transaction",
-    "                                   resides.",
-    "  <api-key-path>                   Path of the API key for the",
-    "                                   contract ABI provider service.",
-    "  <output-path>                    File on which to optionally save",
-    "                                   the output.",
-    "  <transaction-address>            Transaction one wants to retrieve.",
-    "",
-    "  Options:",
-    "    -h                             This help."
-  ];
+    _line;
+  const
+    _app_name =
+      _get(
+        "app",
+        "name");
+  const
+    _global =
+      _global_get();
+  const
+    _quiet =
+      _global[
+        "quiet"];
+  const
+    _text = [
+      "",
+      "Returns an EVM network transaction receipt.",
+      "",
+      "Usage:",
+      `  ${_app_name}`,
+      "    <quiet>",
+      "    <retries-max>",
+      "    <wallet-seed>",
+      "    <wallet-password-path>",
+      "    <chain-id>",
+      "    <chain-name>",
+      "    <target-network>",
+      "    <api-key-path>",
+      "    <output-path>",
+      "    <transaction-address>",
+      "",
+      "Args:",
+      "  <quiet>                          Can be 'y' or 'n'",
+      `                                   Default: ${_quiet}`,
+      "  <retries-max>                    Maximum number of retries before",
+      "                                   failing.",
+      "  <wallet-seed>                    Path of the seed phrase.",
+      "  <wallet-password_path>           Wallet password path.",
+      "  <chain-id>                       Chain ID for the network.",
+      "  <chain-name>                     Name for the network.",
+      "  <target-network>                 Network on which the transaction",
+      "                                   resides.",
+      "  <api-key-path>                   Path of the API key for the",
+      "                                   contract ABI provider service.",
+      "  <output-path>                    File on which to optionally save",
+      "                                   the output.",
+      "  <transaction-address>            Transaction one wants to retrieve.",
+      "",
+      "  Options:",
+      "    -h                             This help."
+    ];
   for ( _line of _text ) {
-    _msg_info(
+    _echo(
       _line);
   }
-  process.exit(
+  _exit(
     _exit_code);
 }
 
 function _cmdline_parse() {
-  quiet =
+  const
+    _global =
+      _global_get();
+  _global[
+    "quiet"] =
     "y";
-  process.argv.forEach(
+  _argv.forEach(
     function (
       _value,
-      _index,
-      _array) {
+      _index) {
       if ( _index == 2 ) {
-        quiet =
+        _global[
+          "quiet"] =
           _value;
       }
       if ( _index == 3 ) {
-        retries_max =
-          _value;
+        _set(
+          "retries",
+          "max",
+          _value);
       }
       if ( _index == 4 ) {
-        wallet_seed =
-          _value;
+        _set(
+          "wallet",
+          "seed",
+          _value);
       }
       if ( _index == 5 ) {
-        wallet_password_path =
-          _value;
+        _set(
+          "wallet",
+          "password_path",
+          _value);
       }
       if ( _index == 6 ) {
-        chain_id =
-          _value;
+        _set(
+          "chain",
+          "id",
+          _value);
       }
       if ( _index == 7 ) {
-        chain_name =
-          _value;
+        _set(
+          "chain",
+          "name",
+          _value);
       }
       if ( _index == 8 ) {
-        target_network =
-          _value;
+        _set(
+          "target",
+          "network",
+          _value);
       }
       if ( _index == 9 ) {
-        api_key_path =
-          _value;
+        _set(
+          "api_key",
+          "path",
+          _value);
       }
       if ( _index == 10 ) {
-        output_path =
-          _value;
+        _set(
+          "output",
+          "path",
+          _value);
       }
       if ( _index == 11 ) {
-        transaction_address =
-          _value;
+        _set(
+          "transaction",
+          "address",
+          _value);
       }
       if ( _value == "-h" ||
            _value == "--help" ) {
-        quiet =
+        _global[
+          "quiet"] =
           "n";
         _usage(
 	  0);
       }
     }
   );
-  if ( transaction_address == "" ) {
-    quiet =
+  const
+    _transaction_address =
+      _get(
+        "transaction",
+        "address");
+  if ( _transaction_address == "" ) {
+    _global[
+      "quiet"] =
       "n";
     _usage(
       1);
@@ -359,9 +489,10 @@ function _cmdline_parse() {
 
 function
   _overrides_set() {
-  if ( retries_max == "" ) {
-    retries_max =
-      100;
+  _override_set(
+    "retries",
+    "max",
+    100);
   }
   if ( chain_id == "" ) {
     _msg_info(
@@ -394,7 +525,8 @@ async function
     else {
       const
         _msg =
-          "'Transaction Receipt Get' returned undefined value.";
+          "Function 'transaction-receipt-get' " +
+          "returned undefined value.";
       throw _msg;
     }
   }
@@ -407,7 +539,9 @@ async function
 }
 
 if ( _cmdline_check(
-       "transaction-receipt-get") ) {
+       "transaction-receipt-get") ||
+     _cmdline_check(
+       "transaction-receipt") ) {
   _global_variables();
   _cmdline_parse();
   _overrides_set();
@@ -427,7 +561,11 @@ if ( _cmdline_check(
     app_opts);
 }
 
-module.exports = {
-  _transaction_receipt_get:
-    _transaction_receipt_get
+export {
+  _transaction_receipt_get
 };
+
+// module.exports = {
+//   _transaction_receipt_get:
+//     _transaction_receipt_get
+// };

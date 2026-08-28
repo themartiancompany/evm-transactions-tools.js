@@ -31,22 +31,27 @@
 
 const
   _transaction_get_module =
-    require(
+    await import(
       "./lib/transaction-get");
 const
   _transaction_get =
     _transaction_get_module._transaction_get;
 const
   _transaction_receipt_get_module =
-    require(
+    await import(
       "./lib/transaction-receipt-get");
 const
   _transaction_receipt_get =
     _transaction_receipt_get_module._transaction_receipt_get;
 
-module.exports = {
-  _transaction_get:
-    _transaction_get,
-  _transaction_receipt_get:
-    _transaction_receipt_get
+export {
+  _transaction_get,
+  _transaction_receipt_get
 };
+
+// module.exports = {
+//   _transaction_get:
+//     _transaction_get,
+//   _transaction_receipt_get:
+//     _transaction_receipt_get
+// };
