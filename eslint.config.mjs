@@ -53,7 +53,7 @@ export default defineConfig([
          "error" },
    files:
      [ "**/*.{js,mjs,cjs}",
-       `**/${_project}*`
+       `**/${_project}*`,
        "lib/*",
      ],
    plugins:

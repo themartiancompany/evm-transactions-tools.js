@@ -493,7 +493,6 @@ function
     "retries",
     "max",
     100);
-  }
   if ( chain_id == "" ) {
     _msg_info(
       "TODO: use evm_chains_info_module");
