@@ -69,7 +69,21 @@ NPM_FILES=\
   "fs-worker.webpack.config.cjs" \
   "package.json" \
   "webpack.config.cjs"
-
+_PROGRAMS=\
+  "transaction-get" \
+  "transaction-receipt-get"
+_ALIASES=\
+  "receipt" \
+  "receipt-get" \
+  "receipt-info" \
+  "transaction" \
+  "transaction-get" \
+  "transaction-info" \
+  "transaction-receipt" \
+  "transaction-receipt-get" \
+  "transaction-receipt-info" \
+  "tx" \
+  "tx-info"
 MAN_FILES=\
   evm-transaction-get
 
@@ -105,6 +119,48 @@ install-scripts:
 	    "$(LIB_DIR)/nodejs"; \
 	  $(_MAKE_EXE) \
 	    "$(LIB_DIR)/nodejs/$(_PROJECT_NPM)"; \
+	  if [[ ! -s "$(BIN_DIR)/transaction" && \
+	        ! -e "$(BIN_DIR)/transaction" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(BIN_DIR)/transaction"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/transaction-info" && \
+	        ! -e "$(BIN_DIR)/transaction-info" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(BIN_DIR)/transaction-info"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/receipt" && \
+	        ! -e "$(BIN_DIR)/receipt" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(BIN_DIR)/receipt"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/receipt-info" && \
+	        ! -e "$(BIN_DIR)/receipt-info" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(BIN_DIR)/receipt-info"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/transaction-receipt-" && \
+	        ! -e "$(BIN_DIR)/transaction-receipt-info" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(BIN_DIR)/transaction-receipt-info"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/tx" && \
+	        ! -e "$(BIN_DIR)/tx" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(BIN_DIR)/tx"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/tx-info" && \
+	        ! -e "$(BIN_DIR)/tx-info" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(BIN_DIR)/tx-info"; \
+	  fi; \
 	  for _program in \
 	    $(_PROGRAMS); do \
 	    if [[ ! -s "$(BIN_DIR)/$${_program}" && \
@@ -137,6 +193,26 @@ install-scripts:
 	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" || \
 	      true; \
 	  fi; \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs" \
+	      "$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)" || \
+	      true; \
+	  fi; \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/$(_PROJECT_NPM)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs" \
+	      "$(DESTDIR)$(PREFIX)/lib/$(_PROJECT_NPM)" || \
+	      true; \
+	  fi; \
+	elif [[ "$(_NPM)" == "true" ]]; then \
+	  make \
+	    install-npm; \
+	  $(_MAKE_LINK) \
+	    "$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" \
+	    "$(LIB_DIR)/nodejs" || \
+	  true; \
+	fi;
 
 
 	$(_INSTALL_DIR) \
@@ -282,5 +358,14 @@ install-man:
 	$(_INSTALL_FILE) \
 	  "build/man/$(_PROJECT_NPM).1" \
 	  "$(MAN_DIR)/man1/$(_PROJECT_NPM).1"
+
+uninstall-scripts:
+
+	for _program in \
+	  $(_PROGRAMS) \
+	  $(_ALIASES); do \
+	  rm \
+	    "$(BIN_DIR)/$${_program}"; \
+	done
 
 .PHONY: check build-man build-npm build-scripts install install-doc install-man install-npm install-scripts shellcheck
