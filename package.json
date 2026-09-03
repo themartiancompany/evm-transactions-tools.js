@@ -1,6 +1,6 @@
 { "name": "evm-transactions-tools",
   "version":
-    "0.0.111111",
+    "0.0.1111111",
   "description":
     "Programs and libraries to interact with Ethereum Virtual Machine (EVM) networks transactions in native computer applications, in particular those written using the LibEVM library and using the EVM Contracts Tools.",
   "funding": {
@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "crash-js-webpack":
-      "^0.0.65",
+      "^0.0.68",
     "brace-expansion":
       "^5.0.9",
     "eslint":
@@ -77,9 +77,9 @@
   },
   "dependencies": {
     "libcrash-js":
-      "npm:crash-js@^100000000001.1000000000000001.1000000000000001",
+      "npm:crash-js@^10000000000001.1000000000000001.1000000000000001",
     "evm-wallet":
-      "npm:evm-wallet.js@^0.0.83",
+      "npm:evm-wallet.js@^0.0.86",
     "yargs":
       "18.0.0"
   },

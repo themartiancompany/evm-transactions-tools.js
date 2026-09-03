@@ -105,7 +105,7 @@ const
      _override_set */
 const
   _override_set =
-    _evm_wallet_module._override_set;
+    _libcrash._override_set;
 /* global
      _printf */
 const
