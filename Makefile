@@ -34,9 +34,15 @@ USR_DIR=$(DESTDIR)$(PREFIX)
 BIN_DIR=$(DESTDIR)$(PREFIX)/bin
 LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT_NPM)
 MAN_DIR?=$(DESTDIR)$(PREFIX)/share/man
-NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)
+NODE_DIR=$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)
 BUILD_NPM_DIR=build
 
+_MAKE_LINK=\
+  ln \
+    -sv
+_MAKE_EXE=\
+  chmod \
+    755
 _INSTALL_FILE=\
   install \
     -vDm644
@@ -83,6 +89,55 @@ eslint:
 install: install-scripts install-doc install-examples install-man
 
 install-scripts:
+
+	if [[ "$(_NPM)" == "false" ]]; then \
+	  $(_INSTALL_DIR) \
+	    "$(LIB_DIR)/nodejs"; \
+	  cp \
+	    -r \
+	    $$(printf \
+	         "$${PWD}/%s " \
+	         $$(cat \
+	              "$${PWD}/package.json" | \
+	              jq \
+	                --raw-output \
+	                '.files[]')) \
+	    "$(LIB_DIR)/nodejs"; \
+	  $(_MAKE_EXE) \
+	    "$(LIB_DIR)/nodejs/$(_PROJECT_NPM)"; \
+	  for _program in \
+	    $(_PROGRAMS); do \
+	    if [[ ! -s "$(BIN_DIR)/$${_program}" && \
+	          ! -e "$(BIN_DIR)/$${_program}" ]]; then \
+	      $(_MAKE_LINK) \
+	        "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/$${_program}" \
+	        "$(BIN_DIR)/$${_program}"; \
+	    fi; \
+	  done; \
+	  rm \
+	    "$(LIB_DIR)/node_modules" || \
+	    true; \
+	  if [[ ! -s "$(LIB_DIR)/node_modules" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/node_modules" \
+	      "$(LIB_DIR)/nodejs/node_modules"; \
+	  fi; \
+	  rm \
+	    -rf \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)"; \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs" \
+	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)"; \
+	  fi; \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs" \
+	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" || \
+	      true; \
+	  fi; \
+
 
 	$(_INSTALL_DIR) \
 	  "$(LIB_DIR)/nodejs/lib"

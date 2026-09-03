@@ -93,6 +93,22 @@
     "module",
   "main":
     "evm-transactions-tools",
+  "bin": {
+    "receipt":
+      "lib/transaction-receipt-get",
+    "transaction":
+      "lib/transaction-get",
+    "transaction-get":
+      "lib/transaction-get",
+    "transaction-info":
+      "lib/transaction-get",
+    "transaction-receipt":
+      "lib/transaction-receipt-get",
+    "transaction-receipt-get":
+      "lib/transaction-receipt-get",
+    "tx":
+      "lib/transaction-get"
+  },
   "scripts": {
     "build-fs-worker":
       "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details && cp 'fs-worker.js' 'dist/evm-transactions-tools'",
