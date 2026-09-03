@@ -221,25 +221,6 @@ install-scripts:
 	  true; \
 	fi;
 
-
-	$(_INSTALL_DIR) \
-	  "$(LIB_DIR)/nodejs/lib"
-	for _file in $(NPM_FILES); do
-	  $(_INSTALL_FILE) \
-	    "$${_file}" \
-	    "$(LIB_DIR)/nodejs/$${_file}"; \
-	  ln \
-	    -s \
-            "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/$${_file}" \
-	    "$(LIB_DIR)/$${_file}" || \
-	  true; \
-	done
-	# ln \
-	#   -s \
-	#   "$(PREFIX)/lib/$(_PROJECT_NPM)/node/lib$(_PROJECT_NPM)" \
-	#   "$(LIB_DIR)/$(_PROJECT_NPM)-js" || \
-	# true
-
 build-man:
 
 	git \
