@@ -119,18 +119,6 @@ install-scripts:
 	    "$(LIB_DIR)/nodejs"; \
 	  $(_MAKE_EXE) \
 	    "$(LIB_DIR)/nodejs/$(_PROJECT_NPM)"; \
-	  if [[ ! -s "$(BIN_DIR)/transaction" && \
-	        ! -e "$(BIN_DIR)/transaction" ]]; then \
-	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
-	      "$(BIN_DIR)/transaction"; \
-	  fi; \
-	  if [[ ! -s "$(BIN_DIR)/transaction-info" && \
-	        ! -e "$(BIN_DIR)/transaction-info" ]]; then \
-	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
-	      "$(BIN_DIR)/transaction-info"; \
-	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/receipt" && \
 	        ! -e "$(BIN_DIR)/receipt" ]]; then \
 	    $(_MAKE_LINK) \
@@ -143,7 +131,25 @@ install-scripts:
 	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
 	      "$(BIN_DIR)/receipt-info"; \
 	  fi; \
-	  if [[ ! -s "$(BIN_DIR)/transaction-receipt-" && \
+	  if [[ ! -s "$(BIN_DIR)/transaction" && \
+	        ! -e "$(BIN_DIR)/transaction" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(BIN_DIR)/transaction"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/transaction-info" && \
+	        ! -e "$(BIN_DIR)/transaction-info" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(BIN_DIR)/transaction-info"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/transaction-receipt" && \
+	        ! -e "$(BIN_DIR)/transaction-receipt" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(BIN_DIR)/transaction-receipt"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/transaction-receipt-info" && \
 	        ! -e "$(BIN_DIR)/transaction-receipt-info" ]]; then \
 	    $(_MAKE_LINK) \
 	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
@@ -182,7 +188,8 @@ install-scripts:
 	    -rf \
 	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" \
 	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)"; \
-	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" ]]; then \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" || \
+	        ! -e "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" ]]; then \
 	    $(_MAKE_LINK) \
 	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs" \
 	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)"; \
@@ -331,7 +338,7 @@ install-npm:
 	  "$(DESTDIR)$(PREFIX)/lib"; \
 	ln \
 	  -s \
-	  "$(NODE_DIR)" \
+	  "$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" \
 	  "$(LIB_DIR)" || \
 	true
 
