@@ -540,9 +540,9 @@ async function
   }
 }
 
-if ( _cmdline_check(
+if ( await _cmdline_check(
        "transaction-receipt-get") ||
-     _cmdline_check(
+     await _cmdline_check(
        "transaction-receipt") ) {
   _global_variables();
   _cmdline_parse();
