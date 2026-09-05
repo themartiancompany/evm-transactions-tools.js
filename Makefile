@@ -118,53 +118,55 @@ install-scripts:
 	                '.files[]')) \
 	    "$(LIB_DIR)/nodejs"; \
 	  $(_MAKE_EXE) \
-	    "$(LIB_DIR)/nodejs/$(_PROJECT_NPM)"; \
+	    "$(LIB_DIR)/nodejs/lib/transaction-get"; \
+	  $(_MAKE_EXE) \
+	    "$(LIB_DIR)/nodejs/lib/transaction-receipt-get"; \
 	  if [[ ! -s "$(BIN_DIR)/receipt" && \
 	        ! -e "$(BIN_DIR)/receipt" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-receipt-get" \
 	      "$(BIN_DIR)/receipt"; \
 	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/receipt-info" && \
 	        ! -e "$(BIN_DIR)/receipt-info" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-receipt-get" \
 	      "$(BIN_DIR)/receipt-info"; \
 	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/transaction" && \
 	        ! -e "$(BIN_DIR)/transaction" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-get" \
 	      "$(BIN_DIR)/transaction"; \
 	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/transaction-info" && \
 	        ! -e "$(BIN_DIR)/transaction-info" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-get" \
 	      "$(BIN_DIR)/transaction-info"; \
 	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/transaction-receipt" && \
 	        ! -e "$(BIN_DIR)/transaction-receipt" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-receipt-get" \
 	      "$(BIN_DIR)/transaction-receipt"; \
 	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/transaction-receipt-info" && \
 	        ! -e "$(BIN_DIR)/transaction-receipt-info" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-receipt-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-receipt-get" \
 	      "$(BIN_DIR)/transaction-receipt-info"; \
 	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/tx" && \
 	        ! -e "$(BIN_DIR)/tx" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-get" \
 	      "$(BIN_DIR)/tx"; \
 	  fi; \
 	  if [[ ! -s "$(BIN_DIR)/tx-info" && \
 	        ! -e "$(BIN_DIR)/tx-info" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/transaction-get" \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/transaction-get" \
 	      "$(BIN_DIR)/tx-info"; \
 	  fi; \
 	  for _program in \
@@ -172,7 +174,7 @@ install-scripts:
 	    if [[ ! -s "$(BIN_DIR)/$${_program}" && \
 	          ! -e "$(BIN_DIR)/$${_program}" ]]; then \
 	      $(_MAKE_LINK) \
-	        "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/$${_program}" \
+	        "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib/$${_program}" \
 	        "$(BIN_DIR)/$${_program}"; \
 	    fi; \
 	  done; \

@@ -71,6 +71,11 @@ const
   _file_write =
     _libcrash._file_write;
 /* global
+     _get */
+const
+  _get =
+    _libcrash._get;
+/* global
      _global_get */
 const
   _global_get =

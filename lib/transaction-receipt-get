@@ -115,7 +115,7 @@ const
      _set */
 const
   _set =
-    _evm_wallet_module._set;
+    _libcrash._set;
 const
   _evm_wallet_module =
     await import(
@@ -177,6 +177,9 @@ function
     "output",
     "path",
     "");
+  const
+    _global =
+      _global_get();
   _global[
     "quiet"] =
     "";
